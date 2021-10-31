@@ -23,3 +23,11 @@ export const mobile = (props) => {
         }
       `;
 };
+
+export const smallMobile = (props) => {
+  return css`
+        @media only screen and (max-width: 450px) {
+          ${props}
+        }
+      `;
+};

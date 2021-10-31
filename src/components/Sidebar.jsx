@@ -1,9 +1,11 @@
+import { useState } from "react";
 import styled from "styled-components";
 import gps from "../assets/gps.svg";
 import cloud1 from "../assets/cloud.png";
 import cloudDrop from "../assets/cloud-drop.png";
 import locationIcon from "../assets/locationIcon.svg";
-import { large, tablet, mobile } from "../responsive";
+import close from "../assets/close.svg";
+import { large, tablet, mobile, smallMobile } from "../responsive";
 
 const Section = styled.section`
 width: 28%;
@@ -14,6 +16,38 @@ width: 28%;
     ${tablet({
       width: "100%",
     })};
+`;
+
+const SliderContainer = styled.div`position: relative;
+width: 100%;
+max-width: 100vw;
+overflow-x: hidden;`;
+const Slides = styled.div`
+position: fixed;
+    top: 0px;
+    left: ${(props) => (props.show === "show" ? "0px" : "-100%")};
+    z-index: 25;
+    width: 380px;
+    height: 100vh;
+    background: var(--secondary-color);
+    padding: 1.2rem 2rem 2rem;
+    transition: all 0.3s ease-in-out 0s;
+    ${tablet({
+      width: "63%",
+    })};
+    ${smallMobile({
+      width: "100%",
+    })};
+`;
+const SlidesSpan = styled.span``;
+const CloseIcon = styled.img`
+cursor: pointer; 
+position: absolute;
+top: 2.5%;
+right: 6.5%;
+color: var(--white-color);
+font-size: 1.5rem;
+cursor: pointer;
 `;
 
 const Location = styled.div`
@@ -120,12 +154,98 @@ font-size: 0.8rem;
 const LocationIcon = styled.img`
 color: var(--white-color);
 `;
+const SlidesContainer = styled.div`
+    height: 100%;
+    color: var(--white-color);
+`;
+const SlideContainer = styled.div`
+margin-top: 3rem;
+`;
+
+const SearchContainer = styled.div`
+width: 100%; 
+display: flex;
+align-items: center;
+justify-content: space-between;
+`;
+const Search = styled.input`
+display: block;
+    width: 70%;
+    height: 38px;
+    background: none;
+    border: 1.2px solid var(--white-color);
+    color: var(--grey-color);
+    padding: 0.3rem 0.8rem;
+    font-weight: bold;
+`;
+const Button = styled.button`
+display: block;
+    width: 28%;
+    height: 38px;
+    background: var(--blue-color);
+    border: 1px solid var(--blue-color);
+    color: var(--white-color);
+    transition: all 0.3s ease-in-out 0s;
+    cursor: pointer;
+`;
+const LocationItems = styled.ul`
+margin-top: 2.5rem;
+    list-style: none;
+`;
+const LocationItem = styled.li`
+width: 100%;
+    height: 39px;
+    margin-top: 1.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out 0s;
+    padding: 0.5rem;
+    border: 1px solid var(--secondary-color);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+`;
 
 const Sidebar = () => {
+  const [open, setOpen] = useState("");
+
   return (
     <Section>
+      <SliderContainer>
+        <div class={open ? "overlay" : null}></div>
+        <Slides show={open ? "show" : null}>
+          <SlidesSpan>
+            <CloseIcon
+              onClick={() => {
+                setOpen("");
+              }}
+              src={close}
+            />
+          </SlidesSpan>
+          <SlidesContainer>
+            <div>
+              <SlideContainer>
+                <SearchContainer>
+                  <Search placeholder="Search Location" type="text" />
+                  <Button>Search</Button>
+                </SearchContainer>
+                <LocationItems>
+                  <LocationItem>Lagos</LocationItem>
+                  <LocationItem>Paris</LocationItem>
+                  <LocationItem>Dubai</LocationItem>
+                </LocationItems>
+              </SlideContainer>
+            </div>
+          </SlidesContainer>
+        </Slides>
+      </SliderContainer>
       <Location>
-        <LocationButton>Search for places</LocationButton>
+        <LocationButton
+          onClick={() => {
+            setOpen("open");
+          }}
+        >
+          Search for places
+        </LocationButton>
         <GPS>
           <GPSImage src={gps} alt="GPS Image" />
         </GPS>
