@@ -1,6 +1,7 @@
 import { useState } from "react";
 import styled from "styled-components";
 import cloud from "../assets/cloud.png";
+import { large, tablet, mobile } from "../responsive";
 
 const Section = styled.section`
 width: 72%;
@@ -8,6 +9,13 @@ width: 72%;
     overflow-y: scroll;
     color: var(--white-color);
     background: var(--primary-color);
+    ${tablet({
+      width: "68%",
+      padding: "2rem 2.2rem 4rem",
+    })};
+    ${mobile({
+      width: "100%",
+    })}
 `;
 const ConversionContainer = styled.div`
 width: 100%;
@@ -40,6 +48,12 @@ margin-top: 3rem;
     gap: 1.5rem;
     grid-auto-flow: dense;
     column-count: 2;
+    ${large({
+      gridTemplateColumns: "repeat(auto-fill, minmax(25%, 1fr))",
+    })};
+    ${tablet({
+      gridTemplateColumns: "repeat(auto-fill, minmax(45%, 1fr))",
+    })}
 `;
 const Card = styled.div`
 width: 100%;

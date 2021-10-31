@@ -3,6 +3,7 @@ import gps from "../assets/gps.svg";
 import cloud1 from "../assets/cloud.png";
 import cloudDrop from "../assets/cloud-drop.png";
 import locationIcon from "../assets/locationIcon.svg";
+import { large, tablet, mobile } from "../responsive";
 
 const Section = styled.section`
 width: 28%;
@@ -10,6 +11,9 @@ width: 28%;
     color: var(--white-color);
     padding: 2rem 0px;
     overflow: hidden;
+    ${tablet({
+      width: "100%",
+    })};
 `;
 
 const Location = styled.div`
