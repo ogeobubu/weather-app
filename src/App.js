@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import Sidebar from "./components/Sidebar";
 import Main from "./components/Main";
 import styled from "styled-components";
@@ -17,9 +18,10 @@ display: flex;
 `;
 
 function App() {
+  const apiKey = "e20d94e466a99718765e9e505fb3692b";
   return (
     <Section>
-      <Sidebar />
+      <Sidebar apiKey={apiKey} />
       <Main />
     </Section>
   );

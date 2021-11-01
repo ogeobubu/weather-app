@@ -1,8 +1,11 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styled from "styled-components";
+import axios from "axios";
+import dateFormat from "dateformat";
 import gps from "../assets/gps.svg";
 import cloud1 from "../assets/cloud.png";
 import cloudDrop from "../assets/cloud-drop.png";
+import sunny from "../assets/sunny.png";
 import locationIcon from "../assets/locationIcon.svg";
 import close from "../assets/close.svg";
 import { large, tablet, mobile, smallMobile } from "../responsive";
@@ -142,6 +145,7 @@ const WeatherDetailDescription = styled.h3`
 font-size: 2rem;
     font-weight: 400;
     margin: 2rem 0px;
+    text-transform: capitalize;
 `;
 const WeatherDetail = styled.p`
 font-size: 0.8rem;
@@ -205,13 +209,37 @@ width: 100%;
     justify-content: space-between;
 `;
 
-const Sidebar = () => {
+const Sidebar = ({ apiKey }) => {
+  const now = new Date();
+  const [data, setData] = useState(null);
   const [open, setOpen] = useState("");
+  const [location, setLocation] = useState("lagos");
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setLocation(location);
+    setOpen("");
+  };
+
+  const kelvinToFarenheit = (k) => {
+    return (k - 273.15).toFixed(0);
+  };
+
+  useEffect(() => {
+    const getData = async () => {
+      const response = await axios.get(
+        `https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${apiKey}`
+      );
+      // setData(response.data);
+      // console.log(response.data);
+    };
+    getData();
+  }, [location]);
 
   return (
     <Section>
       <SliderContainer>
-        <div class={open ? "overlay" : null}></div>
+        <div className={open ? "overlay" : null}></div>
         <Slides show={open ? "show" : null}>
           <SlidesSpan>
             <CloseIcon
@@ -225,8 +253,13 @@ const Sidebar = () => {
             <div>
               <SlideContainer>
                 <SearchContainer>
-                  <Search placeholder="Search Location" type="text" />
-                  <Button>Search</Button>
+                  <form onSubmit={handleSubmit}>
+                    <Search
+                      onChange={(e) => setLocation(e.target.value)}
+                      placeholder="Search Location"
+                    />
+                    <Button type="submit">Search</Button>
+                  </form>
                 </SearchContainer>
                 <LocationItems>
                   <LocationItem>Lagos</LocationItem>
@@ -253,19 +286,30 @@ const Sidebar = () => {
       <Cloud>
         <Cloud1 src={cloud1} />
         <Cloud2 src={cloud1} />
-        <CloudMain src={cloudDrop} />
+        <CloudMain
+          src={cloud1}
+          // src={
+          //   data && data.weather[0].main === "Rain"
+          //     ? cloudDrop
+          //     : data.weather[0].main === "Clouds"
+          //     ? cloud1
+          //     : sunny
+          // }
+        />
         <Cloud3 src={cloud1} />
         <Cloud4 src={cloud1} />
       </Cloud>
       <WeatherDetailsContainer>
         <WeatherDetailTitle>
-          18
+          {/* {data && kelvinToFarenheit(data?.main?.temp)} */}18
           <WeatherDetailSpan>℃</WeatherDetailSpan>
         </WeatherDetailTitle>
-        <WeatherDetailDescription>Light Rain</WeatherDetailDescription>
-        <WeatherDetail>Today, Sunday 31st October, 2021</WeatherDetail>
+        <WeatherDetailDescription>
+          {/* {data && data?.weather[0]?.description} */}Light Rain
+        </WeatherDetailDescription>
+        <WeatherDetail>{dateFormat(now, "dddd, mmmm dS, yyyy")}</WeatherDetail>
         <WeatherDetail>
-          <LocationIcon src={locationIcon} /> Lagos, Nigeria
+          {/* <LocationIcon src={locationIcon} /> {data && data.name} */}Sunday
         </WeatherDetail>
       </WeatherDetailsContainer>
     </Section>
