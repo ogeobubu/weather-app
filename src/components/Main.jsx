@@ -63,7 +63,7 @@ const Cards = styled.div`
 `;
 const Card = styled.div`
   width: 100%;
-  height: 160px;
+  height: 100%;
   background: var(--secondary-color);
   padding: 1rem;
   display: flex;

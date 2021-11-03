@@ -46,7 +46,7 @@ const Slides = styled.div`
   })};
 `;
 const SlidesSpan = styled.span``;
-const CloseIcon = styled.svg`
+const CloseIcon = styled.img`
   cursor: pointer;
   position: absolute;
   top: 2.5%;
@@ -244,7 +244,7 @@ const Sidebar = ({ apiKey }) => {
         <div className={open ? "overlay" : null}></div>
         <Slides show={open ? "show" : null}>
           <SlidesSpan>
-            <CloseIcon s
+            <CloseIcon
               onClick={() => {
                 setOpen("");
               }}
