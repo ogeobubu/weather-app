@@ -1,6 +1,5 @@
 import { useState, useEffect, useContext } from "react";
 import styled from "styled-components";
-import axios from "axios";
 import dateFormat from "dateformat";
 import { AppContext } from "../context";
 import gps from "../assets/gps.svg";
@@ -9,7 +8,7 @@ import cloudDrop from "../assets/cloud-drop.png";
 import sunny from "../assets/sunny.png";
 import locationIcon from "../assets/locationIcon.svg";
 import close from "../assets/close.svg";
-import { large, tablet, mobile, smallMobile } from "../responsive";
+import { tablet, smallMobile } from "../responsive";
 
 const Section = styled.section`
   width: 28%;

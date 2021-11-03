@@ -1,12 +1,10 @@
 import { useState, useEffect, useContext } from "react";
-import axios from "axios";
 import dateFormat from "dateformat";
 import { AppContext } from "../context";
 import styled from "styled-components";
 import cloud from "../assets/cloud.png";
 import cloudDrop from "../assets/cloud-drop.png";
 import sunny from "../assets/sunny.png";
-import moderate from "../assets/moderate.png";
 import { large, tablet, mobile } from "../responsive";
 
 const Section = styled.section`
@@ -158,7 +156,6 @@ const Main = () => {
   const { mainData } = useContext(AppContext);
   const [data, setData] = useState(mainData);
   const now = new Date();
-  const [dayName, setDayName] = useState("");
 
   useEffect(() => {
     return setData(mainData)
@@ -166,12 +163,6 @@ const Main = () => {
 
   const emptyObject = (obj) => {
     return Object.keys(obj).length === 0;
-  }
-
-  const checkUndefined = (data) => {
-    if(typeof data === "undefined") {
-      return null;
-    }
   }
 
   const days = [
@@ -190,10 +181,6 @@ const Main = () => {
     height: 100%;
     background: var(--yellow-color);
   `;
-
-  const kelvinToFarenheit = (k) => {
-    return (k - 273.15).toFixed(0);
-  };
 
   return (
     <Section>
